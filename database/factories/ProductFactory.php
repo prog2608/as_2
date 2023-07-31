@@ -14,10 +14,35 @@ class ProductFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function configure(): array
     {
         return [
-            //
+            return $this->afterMaking(function(Product $product){
+                })->afterCreating(function(Product $product){
+                    $product-.save();
+
+                    $attributes = Attribute::with('values')
+                        ->orderBy('sort_order')
+                        ->get();
+
+                    $values = [];
+                    foreach ($attributes as $attribute){
+                        $values[] = $attribute->values->random()->id;
+                    }
+                    $product->values()->sync($values);
+            });
+
+        public function definition()
+    {
+        $user = DB::table('users')->inRandomOrder()->first();
+        $category = DB::table('categories')->inRandomOrder()->first();
+        $brand = DB::table('brands')->inRandomOrder()->first();
+        $nameTm = fake()->streetName();
+        $nameEn = $nameTm;
+        $fullNameTm = $brand->name . ' ' . $category->product_tm . ' ' . $nameTm;
+        $fullNameEn = $brand->name . ' ' . $category->product_en . ' ' . $nameEn;
+        $hasDiscount = fake()->boolean(20);
+    }
         ];
     }
 }

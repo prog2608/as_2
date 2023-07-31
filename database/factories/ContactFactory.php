@@ -17,7 +17,10 @@ class ContactFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name'=>fake()->name(),
+            'phone'=> fake()->phoneNumber(),
+            'message'=>fake()->text(200),
+            'received_at'=>fake()->dateTimeBetween('-2 weeks','now')
         ];
     }
 }
