@@ -29,9 +29,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->unsignedDouble('price')->default(0);
             $table->unsignedInteger('stock')->default(0);
-            $table->unsignedInteger('discount_percent')->default(0);
-            $table->dateTime('discount_start')->useCurrent();
-            $table->dateTime('discount_end')->useCurrent();
             $table->boolean('credit')->default(0);
             $table->unsignedInteger('viewed')->default(0);
             $table->unsignedInteger('sold')->default(0);

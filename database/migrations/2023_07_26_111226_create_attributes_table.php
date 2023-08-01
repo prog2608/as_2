@@ -9,18 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('attributes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id();;
+            $table->string('name_tm');
+            $table->string('name_en')->nullable();
+            $table->unsignedInteger('sort_order')->default(1);
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('attributes');
     }
