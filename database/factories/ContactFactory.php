@@ -20,6 +20,7 @@ class ContactFactory extends Factory
             'name'=>fake()->name(),
             'phone'=> fake()->phoneNumber(),
             'message'=>fake()->text(200),
+            'email' => rand(0, 1) ? fake()->safeEmail() : null,
             'received_at'=>fake()->dateTimeBetween('-2 weeks','now')
         ];
     }
