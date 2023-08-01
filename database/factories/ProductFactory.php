@@ -15,8 +15,7 @@ class ProductFactory extends Factory
      * @return array<string, mixed>
      */
     public function configure(): array
-    {
-        return [
+        {
             return $this->afterMaking(function(Product $product){
                 })->afterCreating(function(Product $product){
                     $product-.save();
@@ -31,6 +30,7 @@ class ProductFactory extends Factory
                     }
                     $product->values()->sync($values);
             });
+        }
 
         public function definition()
     {
@@ -42,7 +42,43 @@ class ProductFactory extends Factory
         $fullNameTm = $brand->name . ' ' . $category->product_tm . ' ' . $nameTm;
         $fullNameEn = $brand->name . ' ' . $category->product_en . ' ' . $nameEn;
         $hasDiscount = fake()->boolean(20);
-    }
+        return[
+            'user_id' => $user->id,
+            'category_id' => $category->id,
+            'brand_id' => $brand->id,
+            'name_tm' => $nameTm,
+            'name_en' => $nameEn,
+            'full_name_tm' => $fullNameTm,
+            'full_name_en' => $fullNameEn,
+            'barcode' => fake()->unique()->isbn13(),
+            'description' => fake()->text(rand(300, 500)),
+            'price' => fake()->randomFloat($nbMaxDecimals = 1, $min = 100, $max = 1000),
+            'stock' => rand(0, 10),
+            'discount_percent' => $hasDiscount
+                ? rand(10, 20) : 0,
+            'discount_start' => $hasDiscount
+                ? Carbon::today()
+                    ->subDays(rand(1, 7))
+                    ->subHours(rand(1, 24))
+                    ->subMinutes(rand(1, 60))
+                    ->toDateTimeString()
+                : Carbon::today()
+                    ->startOfMonth()
+                    ->toDateTimeString(),
+            'discount_end' => $hasDiscount
+                ? Carbon::today()
+                    ->addDays(rand(1, 7))
+                    ->addHours(rand(1, 24))
+                    ->addMinutes(rand(1, 60))
+                    ->toDateTimeString()
+                : Carbon::today()
+                    ->startOfMonth()
+                    ->toDateTimeString(),
+            'viewed' => rand(20, 100),
+            'sold' => rand(5, 10),
+            'favorites' => rand(0, 30),
+            'random' => rand(0, 999),
+            'created_at' => fake()->dateTimeBetween('-1 year',
         ];
     }
 }
